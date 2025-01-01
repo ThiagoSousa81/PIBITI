@@ -4,6 +4,6 @@ Diário de bordo da elaboração do Mônitor de Articulação do robô **PIPETA*
 
 <details><summary><h2>Dezembro 2024</h2></summary>
 
-### [Monitor de articulação com MPU-6050](https://github.com/ThiagoSousa81/PIBITI/12.24)
+> ### [Monitor de articulação com MPU-6050](https://github.com/ThiagoSousa81/PIBITI/tree/main/12.24)
 
 </details>
