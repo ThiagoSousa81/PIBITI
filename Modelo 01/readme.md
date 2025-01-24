@@ -1,7 +1,7 @@
 ## Modelo 01
 
 > Esse modelo não poderá ser realizado com Arduino UNO pois a faixa de limite de tensão do MPU6050 é de 2.3V a 3.6V
-> <br> O microcontrolador ideal é o ESP32.
+> <br> O microcontrolador ideal é o ESP32 ou o Raspberry Pi Pico W
 
 ## Descrição
 
