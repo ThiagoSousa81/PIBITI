@@ -18,8 +18,7 @@ float AccX1, AccY1, AccZ1, GyrX1, GyrY1, GyrZ1;
 float AccX2, AccY2, AccZ2, GyrX2, GyrY2, GyrZ2;
 float angleX1, angleY1, angleZ1, angleX2, angleY2, angleZ2;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   // Inicializa I2C e configura os sensores
@@ -35,28 +34,26 @@ void setup()
   Wire.write(0);
   Wire.endTransmission(true);
 
-  pinMode(2, INPUT);                                                // Define o pino de interrupção (INT) no Arduino
+  pinMode(2, INPUT);  // Define o pino de interrupção (INT) no Arduino
   attachInterrupt(digitalPinToInterrupt(2), onInterrupt1, FALLING); // Configura a interrupção
 
-  pinMode(3, INPUT);                                                // Define o pino de interrupção (INT) no Arduino
+  pinMode(3, INPUT);  // Define o pino de interrupção (INT) no Arduino
   attachInterrupt(digitalPinToInterrupt(2), onInterrupt2, FALLING); // Configura a interrupção
 
   pinMode(6, INPUT);
   pinMode(7, INPUT);
+
 }
 
 // Aqui seriam ações de interrupção
-void onInterrupt1()
-{
+void onInterrupt1() {
   readMPU(MPU1, AccX1, AccY1, AccZ1, GyrX1, GyrY1, GyrZ1);
 }
-void onInterrupt2()
-{
+void onInterrupt2() {
   readMPU(MPU2, AccX2, AccY2, AccZ2, GyrX2, GyrY2, GyrZ2);
 }
 
-void loop()
-{
+void loop() {
   // Obter dados do MPU1
   readMPU(MPU1, AccX1, AccY1, AccZ1, GyrX1, GyrY1, GyrZ1);
   // Obter dados do MPU2
@@ -88,30 +85,25 @@ void loop()
   // Calcular o Delta Z (diferença do ângulo de torção entre o robô e a carroça)
   float deltaZ = accelAngleZ2 - accelAngleZ1;
 
-  if (digitalRead(6) == HIGH)
-  {
+  if (digitalRead(6) == HIGH){
     Serial.println("Dados do sensor do robô:");
     printSensorData(AccX1, AccY1, AccZ1, GyrX1, GyrY1, GyrZ1, angleX1, angleY1);
   }
-  else if (digitalRead(7) == HIGH)
-  {
+  else if (digitalRead(7) == HIGH){
     Serial.println("Dados do sensor da carroça:");
     printSensorData(AccX2, AccY2, AccZ2, GyrX2, GyrY2, GyrZ2, angleX2, angleY2);
   }
-  else if (digitalRead(6) == LOW && digitalRead(7) == LOW)
-  {
+  else if (digitalRead(6) == LOW && digitalRead(7) == LOW) {
     // Exibe os ângulos e alertas
     Serial.print("Delta X (Lateral): ");
     Serial.println(deltaX);
-    if (deltaX < -90 || deltaX > 90)
-    {
+    if (deltaX < -90 || deltaX > 90) {
       Serial.println("ALERTA: Ângulo lateral fora do limite!");
     }
 
     Serial.print("Delta Y (Frontal): ");
     Serial.println(deltaY);
-    if (deltaY < -20 || deltaY > 20)
-    {
+    if (deltaY < -20 || deltaY > 20) {
       Serial.println("ALERTA: Ângulo frontal fora do limite!");
     }
 
@@ -119,20 +111,18 @@ void loop()
     // Será necessário talvez fazer uma subtração do atrito do engate para ficar mais realista
     Serial.print("Delta Z (Torção): ");
     Serial.println(deltaZ);
-    if (deltaZ < -5 || deltaZ > 5)
-    {
+    if (deltaZ < -5 || deltaZ > 5) {
       Serial.println("ALERTA: Ângulo de torção fora do limite!");
     }
 
     Serial.println("========================");
   }
-
+  
   delay(600);
 }
 
 // Função para imprimir os dados do sensor
-void printSensorData(float AccX, float AccY, float AccZ, float GyrX, float GyrY, float GyrZ, float angleX, float angleY)
-{
+void printSensorData(float AccX, float AccY, float AccZ, float GyrX, float GyrY, float GyrZ, float angleX, float angleY) {
   Serial.print("Acelerômetro X: ");
   Serial.println(AccX);
   Serial.print("Acelerômetro Y: ");
@@ -151,19 +141,18 @@ void printSensorData(float AccX, float AccY, float AccZ, float GyrX, float GyrY,
   Serial.println(angleY);
 }
 
-void readMPU(int address, float &AccX, float &AccY, float &AccZ, float &GyrX, float &GyrY, float &GyrZ)
-{
+void readMPU(int address, float &AccX, float &AccY, float &AccZ, float &GyrX, float &GyrY, float &GyrZ) {
   Wire.beginTransmission(address);
   Wire.write(0x3B); // Registro inicial de leitura
   Wire.endTransmission(false);
   Wire.requestFrom(address, 14, true);
 
   // A operação Left-Shift (<<) desloca 2 hexadecimais pra esquerda e acrescenta mais 2 zeros
-  // O que o procedimento está fazendo é juntando os 16 bytes da leitura de cada dimensão
+  // O que o procedimento está fazendo é juntando os 16 bytes da leitura de cada dimensão 
   // através de uma concatenação direta em Bytes e dividindo pelo fator de sensibilidade
 
-  float sens_acc = 16384.0; // 19.6m/s²
-  float sens_gir = 131.0;   // 250°/s
+  float sens_acc = 16384.0; // 19.6m/s² 
+  float sens_gir = 131.0; // 250°/s
 
   // Leitura do acelerômetro
   AccX = (Wire.read() << 8 | Wire.read()) / sens_acc;
@@ -171,8 +160,7 @@ void readMPU(int address, float &AccX, float &AccY, float &AccZ, float &GyrX, fl
   AccZ = (Wire.read() << 8 | Wire.read()) / sens_acc;
 
   // Leitura do giroscópio
-  Wire.read();
-  Wire.read(); // Ignora temperatura
+  Wire.read(); Wire.read(); // Ignora temperatura
   GyrX = (Wire.read() << 8 | Wire.read()) / sens_gir;
   GyrY = (Wire.read() << 8 | Wire.read()) / sens_gir;
   GyrZ = (Wire.read() << 8 | Wire.read()) / sens_gir;
