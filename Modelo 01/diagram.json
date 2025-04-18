@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "author": "Thiago Sousa",
+    "editor": "wokwi",
+    "parts": [
+      { "type": "wokwi-arduino-uno", "id": "uno", "top": 0, "left": 0, "attrs": {} },
+      { "type": "wokwi-potentiometer", "id": "pot1", "top": 238.7, "left": 47.8, "attrs": {} },
+      { "type": "wokwi-potentiometer", "id": "pot2", "top": 238.7, "left": 134.2, "attrs": {} },
+      { "type": "wokwi-potentiometer", "id": "pot3", "top": 238.7, "left": 220.6, "attrs": {} }
+    ],
+    "connections": [
+      [ "pot1:SIG", "uno:A0", "green", [ "v19.2", "h38", "v-105.6", "h83.2" ] ],
+      [ "pot2:SIG", "uno:A1", "gold", [ "v19.2", "h-0.4" ] ],
+      [ "pot3:SIG", "uno:A2", "blue", [ "v19.2", "h47.6", "v-115.2", "h-76.8" ] ],
+      [ "pot1:VCC", "uno:5V", "red", [ "v28.8", "h-58.4", "v-124.8", "h124.8" ] ],
+      [ "pot2:VCC", "uno:5V", "red", [ "v28.8", "h-144.8", "v-124.8", "h115.2" ] ],
+      [ "pot3:VCC", "uno:5V", "red", [ "v28.8", "h-231.2", "v-124.8", "h115.2" ] ],
+      [ "pot1:GND", "uno:GND.2", "black", [ "v38.4", "h-28.8", "v-115.2", "h121.5" ] ],
+      [ "pot2:GND", "uno:GND.2", "black", [ "v38.4", "h-115.2", "v-115.2", "h121.5" ] ],
+      [ "pot3:GND", "uno:GND.2", "black", [ "v38.4", "h-201.6", "v-115.2", "h115.2" ] ]
+    ],
+    "dependencies": {}
+  }
