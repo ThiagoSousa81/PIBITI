@@ -10,6 +10,6 @@ Diário de bordo da elaboração do Mônitor de Articulação do robô **PIPETA*
 
 <details><summary><h2>Janeiro 2025</h2></summary>
 
-> ### [Atualização de detalhes do modelo 01](https://github.com/ThiagoSousa81/PIBITI/tree/main/Modelo%2001/)
+> ### [Atualização de detalhes do modelo 02](https://github.com/ThiagoSousa81/PIBITI/tree/main/Modelo%2002/)
 
 </details>
